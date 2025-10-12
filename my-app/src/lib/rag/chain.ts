@@ -10,8 +10,9 @@ import { createRetrievalChain } from "langchain/chains/retrieval";
 import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
 import { BufferMemory } from "langchain/memory";
 import { BaseRetriever } from "@langchain/core/retrievers";
-import { RunnableSequence } from "@langchain/core/runnables";
 import { BaseMessage, HumanMessage, AIMessage } from "@langchain/core/messages";
+import { Runnable } from "@langchain/core/runnables";
+import { Document } from "@langchain/core/documents";
 
 export interface ChatMessage {
   role: "user" | "assistant";
@@ -21,7 +22,7 @@ export interface ChatMessage {
 export class PortfolioRAGChain {
   private llm: ChatOpenAI;
   private retriever: BaseRetriever;
-  private chain: any;
+  private chain!: Runnable<{ input: string; chat_history: BaseMessage[] }, { answer: string; context: Document[] }>;
   private memory: BufferMemory;
   private initialized: Promise<void>;
 

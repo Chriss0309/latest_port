@@ -31,7 +31,7 @@ export default function Home() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.5 }}
             >
-              <p>I'm based in <span className="underline">Toronto</span> and <span className="underline">Waterloo</span>.</p>
+              <p>I&apos;m based in <span className="underline">Toronto</span> and <span className="underline">Waterloo</span>.</p>
               <p>I came to Waterloo to study <span className="underline">CS</span> in 2023 and have been here ever since.</p>
             </motion.div>
 
@@ -193,7 +193,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.6, duration: 0.5 }}
             >
-              <h2 className="text-xl font-heading font-bold text-white text-left">A few projects that I've worked on...</h2>
+              <h2 className="text-xl font-heading font-bold text-white text-left">A few projects that I&apos;ve worked on...</h2>
               
               <div className="space-y-3 text-gray-300">
                 <motion.div 

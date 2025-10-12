@@ -208,7 +208,7 @@ export function ChatInterface() {
                           ),
                           // Style code blocks
                           code: (props) => {
-                            const {node, className, children, ...rest} = props as any;
+                            const {className, children, ...rest} = props as { className?: string; children?: React.ReactNode };
                             const isInline = !className;
                             return isInline ? (
                               <code className="bg-white/10 px-1.5 py-0.5 rounded text-blue-300 text-xs" {...rest}>

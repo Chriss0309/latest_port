@@ -136,7 +136,7 @@ export class PortfolioDataLoader {
   /**
    * Add custom documents programmatically
    */
-  static createDocument(content: string, metadata: Record<string, any> = {}): Document {
+  static createDocument(content: string, metadata: Record<string, unknown> = {}): Document {
     return new Document({
       pageContent: content,
       metadata: {
