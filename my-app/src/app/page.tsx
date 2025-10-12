@@ -4,6 +4,7 @@ import { ChatInterface } from "@/components/chat/ChatInterface";
 import { NavbarDemo } from "@/components/ui/navbar-demo";
 import { TypingAnimation } from "@/components/ui/typing-animation";
 import { motion } from "motion/react";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -52,7 +53,16 @@ export default function Home() {
                   whileHover={{ x: 5 }}
                 >
                   <span className="text-gray-500 flex-shrink-0">›</span>
-                  <p className="flex-1">studying <span className="font-semibold text-white">Computer Science</span> at <span className="underline">Wilfrid Laurier University</span> (grad: Dec. 2026)</p>
+                  <p className="flex-1">studying <span className="font-semibold text-white">Computer Science</span> at <span className="inline-flex items-center gap-1.5 underline">
+                    <Image 
+                      src="https://storage-prtl-co.imgix.net/endor/organisations/14118/logos/1703088516_studyportals-logo.png" 
+                      alt="Wilfrid Laurier University" 
+                      width={16} 
+                      height={16} 
+                      className="inline-block"
+                    />
+                    Wilfrid Laurier University
+                  </span> (grad: Dec. 2026, GPA: 3.85)</p>
                 </motion.div>
                 <motion.div 
                   className="flex items-baseline gap-3"
@@ -72,7 +82,16 @@ export default function Home() {
                   whileHover={{ x: 5 }}
                 >
                   <span className="text-gray-500 flex-shrink-0">›</span>
-                  <p className="flex-1">working on <span className="font-semibold text-white underline"> <a href="https://www.mentor-trader.com/">MentorTrader</a></span> as a solo founder</p>
+                  <p className="flex-1">working on <span className="inline-flex items-baseline gap-1.5 font-semibold text-white underline">
+                    <Image 
+                      src="/MentorTrader Logo.png" 
+                      alt="MentorTrader" 
+                      width={16} 
+                      height={16} 
+                      className="inline-block align-text-bottom"
+                    />
+                    <a href="https://www.mentor-trader.com/">MentorTrader</a>
+                  </span> as a solo founder</p>
                 </motion.div>
                 <motion.div 
                   className="flex items-baseline gap-3"
@@ -104,7 +123,18 @@ export default function Home() {
                   whileHover={{ x: 5 }}
                 >
                   <span className="text-gray-500 flex-shrink-0">›</span>
-                  <p className="flex-1">was working as a <span className="font-semibold text-white">SWE intern</span> at <span className="underline font-semibold text-white">Bolttech</span>, shipping a serverless architecture for inventory management handling <span className="font-semibold text-white">10,000+ daily transactions</span></p>
+                  <p className="flex-1">was working as a <span className="font-semibold text-white">SWE intern</span> at <span className="inline-flex items-center gap-1.5 underline font-semibold text-white">
+                    <Image 
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTaqx9Nk6GoCK9IISw9asCEs2YC8MitdLjAg&s" 
+                      alt="Bolttech" 
+                      width={16} 
+                      height={16} 
+                      className="inline-block"
+                    />
+                    <a href="https://bolttech.io/">
+                    Bolttech
+                    </a>
+                  </span>, shipping a serverless architecture for inventory management handling <span className="font-semibold text-white">10,000+ daily transactions</span></p>
                 </motion.div>
                 <motion.div 
                   className="flex items-baseline gap-3"
@@ -114,7 +144,18 @@ export default function Home() {
                   whileHover={{ x: 5 }}
                 >
                   <span className="text-gray-500 flex-shrink-0">›</span>
-                  <p className="flex-1">was working as a <span className="font-semibold text-white">SWE intern</span> at <span className="underline font-semibold text-white">Sensoft Technologies</span>, building a monitoring system for <span className="font-semibold text-white">50+ IoT sensors</span> across multiple sites</p>
+                  <p className="flex-1">was working as a <span className="font-semibold text-white">SWE intern</span> at <span className="inline-flex items-center gap-1.5 underline font-semibold text-white">
+                    <Image 
+                      src="https://media.licdn.com/dms/image/v2/C560BAQE7J1kH3K6Axg/company-logo_200_200/company-logo_200_200/0/1663666337869/sensoft_technologies_logo?e=2147483647&v=beta&t=MHNWv81ezIhKijgNalYp3yrMd-_Rv_fBno1FCqg0_04" 
+                      alt="Sensoft Technologies" 
+                      width={16} 
+                      height={16} 
+                      className="inline-block"
+                    />
+                    <a href="https://sensoft.tech/">
+                    Sensoft Technologies
+                    </a>
+                  </span>, building a monitoring system for <span className="font-semibold text-white">50+ IoT sensors</span> across multiple sites</p>
                 </motion.div>
               </div>
             </motion.div>
@@ -132,7 +173,16 @@ export default function Home() {
                   <div className="flex items-baseline gap-3">
                     <span className="text-gray-500 flex-shrink-0">›</span>
                     <div className="flex-1">
-                      <p>am working on <span className="font-semibold text-white"><a href="https://www.mentor-trader.com/">MentorTrader</a></span> -- a marketplace platform for <span className="font-semibold text-white">retail traders</span> to find <span className="font-semibold text-white">credible verified mentors</span></p>
+                      <p>am working on <span className="inline-flex items-baseline gap-1.5 font-semibold text-white">
+                        <Image 
+                          src="/MentorTrader Logo.png" 
+                          alt="MentorTrader" 
+                          width={16} 
+                          height={16} 
+                          className="inline-block align-text-bottom"
+                        />
+                        <a href="https://www.mentor-trader.com/">MentorTrader</a>
+                      </span> -- a marketplace platform for <span className="font-semibold text-white">retail traders</span> to find <span className="font-semibold text-white">credible verified mentors</span></p>
                                 
                       {/* Video Showcase */}
                       <motion.div 
@@ -169,7 +219,25 @@ export default function Home() {
                           </div>
                           <div className="flex items-baseline gap-3">
                             <span className="text-gray-500 flex-shrink-0">›</span>
-                            <p className="flex-1">partnering with fintech companies like <span className="underline font-semibold text-white"><a href="https://kinfo.com/">Kinfo</a></span> and <span className="underline font-semibold text-white"><a href="https://www.darwinexzero.com/">Darwinex</a></span></p>
+                            <p className="flex-1">partnering with fintech companies like <span className="inline-flex items-baseline gap-1.5 underline font-semibold text-white">
+                              <Image 
+                                src="/kinfo.png" 
+                                alt="Kinfo" 
+                                width={16} 
+                                height={16} 
+                                className="inline-block align-text-bottom"
+                              />
+                              <a href="https://kinfo.com/">Kinfo</a>
+                            </span> and <span className="inline-flex items-baseline gap-1.5 underline font-semibold text-white">
+                              <Image 
+                                src="/Darwinex.png" 
+                                alt="Darwinex" 
+                                width={16} 
+                                height={16} 
+                                className="inline-block align-text-bottom"
+                              />
+                              <a href="https://www.darwinexzero.com/">Darwinex</a>
+                            </span></p>
                           </div>
                           <div className="flex items-baseline gap-3">
                             <span className="text-gray-500 flex-shrink-0">›</span>
@@ -204,7 +272,7 @@ export default function Home() {
                   whileHover={{ x: 5 }}
                 >
                   <span className="text-gray-500 flex-shrink-0">›</span>
-                  <p className="flex-1"><span className="underline font-semibold">Faves</span> – a platform for curating recommendations from influential figures</p>
+                  <p className="flex-1"><span className="underline font-semibold"><a href="https://faves.site/index.html">Faves</a></span> – a platform for curating recommendations from influential figures</p>
                 </motion.div>
                 <motion.div 
                   className="flex items-baseline gap-3"
@@ -214,7 +282,7 @@ export default function Home() {
                   whileHover={{ x: 5 }}
                 >
                   <span className="text-gray-500 flex-shrink-0">›</span>
-                  <p className="flex-1"><span className="underline font-semibold">URL Shortener</span> – a full-stack URL management system</p>
+                  <p className="flex-1"><span className="underline font-semibold"><a href="https://github.com/Chriss0309/URL_Shortener">URL Shortener</a></span> – a full-stack URL management system</p>
                 </motion.div>
                 <motion.div 
                   className="flex items-baseline gap-3"
@@ -224,7 +292,7 @@ export default function Home() {
                   whileHover={{ x: 5 }}
                 >
                   <span className="text-gray-500 flex-shrink-0">›</span>
-                  <p className="flex-1"><span className="underline font-semibold">Koinbase</span> – a mock trading platform built with React and FastAPI</p>
+                  <p className="flex-1"><span className="underline font-semibold"><a href="https://github.com/VickySekhon/koinbase">Koinbase</a></span> – a mock trading platform built with React and FastAPI</p>
                 </motion.div>
               </div>
             </motion.div>
