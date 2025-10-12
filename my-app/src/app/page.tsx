@@ -1,0 +1,345 @@
+"use client";
+
+import { ChatInterface } from "@/components/chat/ChatInterface";
+import { NavbarDemo } from "@/components/ui/navbar-demo";
+import { TypingAnimation } from "@/components/ui/typing-animation";
+import { motion } from "motion/react";
+
+export default function Home() {
+  return (
+    <div className="min-h-screen">
+      {/* Navbar */}
+      <NavbarDemo />
+
+        {/* Main Content */}
+      <main className="max-w-7xl mx-auto p-8 pb-20 sm:p-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          {/* Left Side - Introduction */}
+          <motion.div 
+            className="space-y-6 font-body"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <h1 className="text-5xl font-heading font-black mb-8 tracking-tight">
+              <TypingAnimation words={["Hey, I'm Chris!"]} />
+            </h1>
+            
+            <motion.div 
+              className="space-y-4 text-gray-300 text-base leading-relaxed"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              <p>I'm based in <span className="underline">Toronto</span> and <span className="underline">Waterloo</span>.</p>
+              <p>I came to Waterloo to study <span className="underline">CS</span> in 2023 and have been here ever since.</p>
+            </motion.div>
+
+            <motion.div 
+              className="space-y-6 mt-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+            >
+              <h2 className="text-xl font-heading font-bold text-white text-left">What am I doing currently...</h2>
+              
+              <div className="space-y-3 text-gray-300">
+                <motion.div 
+                  className="flex items-baseline gap-3"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.6, duration: 0.4 }}
+                  whileHover={{ x: 5 }}
+                >
+                  <span className="text-gray-500 flex-shrink-0">›</span>
+                  <p className="flex-1">studying <span className="font-semibold text-white">Computer Science</span> at <span className="underline">Wilfrid Laurier University</span> (grad: Dec. 2026)</p>
+                </motion.div>
+                <motion.div 
+                  className="flex items-baseline gap-3"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.7, duration: 0.4 }}
+                  whileHover={{ x: 5 }}
+                >
+                  <span className="text-gray-500 flex-shrink-0">›</span>
+                  <p className="flex-1">working as a <span className="font-semibold text-white">contract engineer</span> building out software for clients (e.g. <span className="underline font-semibold"><a href="http://www.faves.site/index.html">Faves</a></span>)</p>
+                </motion.div>
+                <motion.div 
+                  className="flex items-baseline gap-3"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8, duration: 0.4 }}
+                  whileHover={{ x: 5 }}
+                >
+                  <span className="text-gray-500 flex-shrink-0">›</span>
+                  <p className="flex-1">working on <span className="font-semibold text-white underline"> <a href="https://www.mentor-trader.com/">MentorTrader</a></span> as a solo founder</p>
+                </motion.div>
+                <motion.div 
+                  className="flex items-baseline gap-3"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.9, duration: 0.4 }}
+                  whileHover={{ x: 5 }}
+                >
+                  <span className="text-gray-500 flex-shrink-0">›</span>
+                  <p className="flex-1">playing <span className="font-semibold text-white">high-stakes poker</span> to clear out my mind ♠️</p>
+                </motion.div>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className="space-y-6 mt-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.0, duration: 0.5 }}
+            >
+              <h2 className="text-xl font-heading font-bold text-white text-left">I ...</h2>
+              
+              <div className="space-y-3 text-gray-300">
+                <motion.div 
+                  className="flex items-baseline gap-3"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.1, duration: 0.4 }}
+                  whileHover={{ x: 5 }}
+                >
+                  <span className="text-gray-500 flex-shrink-0">›</span>
+                  <p className="flex-1">was working as a <span className="font-semibold text-white">SWE intern</span> at <span className="underline font-semibold text-white">Bolttech</span>, shipping a serverless architecture for inventory management handling <span className="font-semibold text-white">10,000+ daily transactions</span></p>
+                </motion.div>
+                <motion.div 
+                  className="flex items-baseline gap-3"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.2, duration: 0.4 }}
+                  whileHover={{ x: 5 }}
+                >
+                  <span className="text-gray-500 flex-shrink-0">›</span>
+                  <p className="flex-1">was working as a <span className="font-semibold text-white">SWE intern</span> at <span className="underline font-semibold text-white">Sensoft Technologies</span>, building a monitoring system for <span className="font-semibold text-white">50+ IoT sensors</span> across multiple sites</p>
+                </motion.div>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className="space-y-6 mt-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.3, duration: 0.5 }}
+            >
+              <h2 className="text-xl font-heading font-bold text-white text-left">On nights and weekends...</h2>
+              
+              <div className="space-y-3 text-gray-300">
+                <div>
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-gray-500 flex-shrink-0">›</span>
+                    <div className="flex-1">
+                      <p>am working on <span className="font-semibold text-white"><a href="https://www.mentor-trader.com/">MentorTrader</a></span> -- a marketplace platform for <span className="font-semibold text-white">retail traders</span> to find <span className="font-semibold text-white">credible verified mentors</span></p>
+                                
+                      {/* Video Showcase */}
+                      <motion.div 
+                        className="mt-8"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 1.5, duration: 0.5 }}
+                        whileHover={{ scale: 1.02 }}
+                      >
+                        <div className="relative overflow-hidden rounded-2xl border border-white/20 bg-white/5 backdrop-blur-sm shadow-xl max-w-xs transition-all duration-300 hover:border-white/30 hover:shadow-2xl">
+                          <video 
+                            className="w-full h-auto rounded-2xl"
+                            autoPlay 
+                            loop 
+                            muted 
+                            playsInline
+                          >
+                            <source src="/showcase(edited).mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                          </video>
+                        </div>
+                      </motion.div>
+
+                      <div className="mt-4 ml-4">
+                        <h3 className="text-base font-heading font-semibold text-white mb-3">my progress so far..</h3>
+                        <div className="space-y-2 text-gray-300">
+                          <div className="flex items-baseline gap-3">
+                            <span className="text-gray-500 flex-shrink-0">›</span>
+                            <p className="flex-1">created an <span className="font-semibold text-white">MVP</span> (<span className="underline font-semibold"><a href="https://www.mentor-trader.com/">mentor-trader.com</a></span>)</p>
+                          </div>
+                          <div className="flex items-baseline gap-3">
+                            <span className="text-gray-500 flex-shrink-0">›</span>
+                            <p className="flex-1">onboarded <span className="font-semibold text-white">120+ verified traders</span> from <span className="font-semibold text-white">X</span></p>
+                          </div>
+                          <div className="flex items-baseline gap-3">
+                            <span className="text-gray-500 flex-shrink-0">›</span>
+                            <p className="flex-1">partnering with fintech companies like <span className="underline font-semibold text-white"><a href="https://kinfo.com/">Kinfo</a></span> and <span className="underline font-semibold text-white"><a href="https://www.darwinexzero.com/">Darwinex</a></span></p>
+                          </div>
+                          <div className="flex items-baseline gap-3">
+                            <span className="text-gray-500 flex-shrink-0">›</span>
+                            <p className="flex-1">interviewed with <span className="underline font-semibold"><a href="https://www.youtube.com/@tommyanytime">Tommy Anytime</a></span>, a YouTuber known for exposing fake trading gurus</p>
+                          </div>
+                          <div className="flex items-baseline gap-3">
+                            <span className="text-gray-500 flex-shrink-0">›</span>
+                            <p className="flex-1">collected feedback from <span className="font-semibold text-white">100+ traders</span> on <span className="font-semibold text-white">X</span></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className="space-y-6 mt-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.6, duration: 0.5 }}
+            >
+              <h2 className="text-xl font-heading font-bold text-white text-left">A few projects that I've worked on...</h2>
+              
+              <div className="space-y-3 text-gray-300">
+                <motion.div 
+                  className="flex items-baseline gap-3"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.7, duration: 0.4 }}
+                  whileHover={{ x: 5 }}
+                >
+                  <span className="text-gray-500 flex-shrink-0">›</span>
+                  <p className="flex-1"><span className="underline font-semibold">Faves</span> – a platform for curating recommendations from influential figures</p>
+                </motion.div>
+                <motion.div 
+                  className="flex items-baseline gap-3"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.8, duration: 0.4 }}
+                  whileHover={{ x: 5 }}
+                >
+                  <span className="text-gray-500 flex-shrink-0">›</span>
+                  <p className="flex-1"><span className="underline font-semibold">URL Shortener</span> – a full-stack URL management system</p>
+                </motion.div>
+                <motion.div 
+                  className="flex items-baseline gap-3"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.9, duration: 0.4 }}
+                  whileHover={{ x: 5 }}
+                >
+                  <span className="text-gray-500 flex-shrink-0">›</span>
+                  <p className="flex-1"><span className="underline font-semibold">Koinbase</span> – a mock trading platform built with React and FastAPI</p>
+                </motion.div>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className="mt-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 2.0, duration: 0.5 }}
+            >
+              <p className="text-xl font-heading font-bold text-white text-left mb-6">
+                Goated videos...
+              </p>
+              
+              <div className="space-y-4">
+                {/* Video 1 */}
+                <motion.div 
+                  className="relative overflow-hidden rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm shadow-lg"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 2.1, duration: 0.5 }}
+                  whileHover={{ scale: 1.02, borderColor: "rgba(255, 255, 255, 0.3)" }}
+                >
+                  <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                    <iframe
+                      className="absolute top-0 left-0 w-full h-full rounded-xl"
+                      src="https://www.youtube.com/embed/KmDYXaaT9sA"
+                      title="YouTube video 1"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </motion.div>
+
+                {/* Video 2 */}
+                <motion.div 
+                  className="relative overflow-hidden rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm shadow-lg"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 2.2, duration: 0.5 }}
+                  whileHover={{ scale: 1.02, borderColor: "rgba(255, 255, 255, 0.3)" }}
+                >
+                  <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                    <iframe
+                      className="absolute top-0 left-0 w-full h-full rounded-xl"
+                      src="https://www.youtube.com/embed/uxoCnxlxpIk"
+                      title="YouTube video 2"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </motion.div>
+
+                {/* Video 3 */}
+                <motion.div 
+                  className="relative overflow-hidden rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm shadow-lg"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 2.3, duration: 0.5 }}
+                  whileHover={{ scale: 1.02, borderColor: "rgba(255, 255, 255, 0.3)" }}
+                >
+                  <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                    <iframe
+                      className="absolute top-0 left-0 w-full h-full rounded-xl"
+                      src="https://www.youtube.com/embed/JjHFubUPLV0"
+                      title="YouTube video 3"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </motion.div>
+
+                {/* Video 4 */}
+                <motion.div 
+                  className="relative overflow-hidden rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm shadow-lg"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 2.4, duration: 0.5 }}
+                  whileHover={{ scale: 1.02, borderColor: "rgba(255, 255, 255, 0.3)" }}
+                >
+                  <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                    <iframe
+                      className="absolute top-0 left-0 w-full h-full rounded-xl"
+                      src="https://www.youtube.com/embed/mScpHTIi-kM"
+                      title="YouTube video 4"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </motion.div>
+          </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Right Side - Chat Interface */}
+          <motion.div 
+            className="lg:sticky lg:top-24"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <ChatInterface />
+          </motion.div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <motion.footer 
+        className="mt-20 text-center text-sm text-gray-500 pb-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.5, duration: 0.5 }}
+      >
+        <p>© Please reach out to me on X, I love yapping with anyone about anything.</p>
+      </motion.footer>
+    </div>
+  );
+}
