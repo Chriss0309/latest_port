@@ -96,7 +96,6 @@ export function NavbarDemo() {
 
           <MobileNavMenu
             isOpen={isMobileMenuOpen}
-            onClose={() => setIsMobileMenuOpen(false)}
           >
             {/* Mobile Social Links */}
             <div className="flex gap-6 w-full justify-center py-4">
