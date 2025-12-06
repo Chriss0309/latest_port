@@ -120,7 +120,7 @@ export class VectorStoreManager {
       // Try to estimate document count through a broad search
       const results = await this.vectorStore.similaritySearch("", 1000);
       return { documentCount: results.length };
-    } catch (error) {
+    } catch {
       // If search fails, return 0
       return { documentCount: 0 };
     }
