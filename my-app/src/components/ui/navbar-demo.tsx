@@ -69,7 +69,7 @@ export function NavbarDemo() {
           <div className="flex items-center gap-4">
             <NavbarButton 
               variant="secondary" 
-              href="/Chris_SWE_Resume.pdf"
+              href="/Christopher_OOI_Resume (1).pdf"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -123,7 +123,7 @@ export function NavbarDemo() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 variant="secondary"
                 className="w-full"
-                href="/Chris_SWE_Resume.pdf"
+                href="/Christopher_OOI_Resume (1).pdf"
                 target="_blank"
                 rel="noopener noreferrer"
               >

@@ -237,12 +237,13 @@ export const NavbarLogo = () => {
       href="/"
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal cursor-pointer"
     >
-      <img
-        src="https://media.licdn.com/dms/image/v2/D4D03AQHNZK7YibZYRQ/profile-displayphoto-shrink_800_800/B4DZb0M1FWIEAc-/0/1747853726948?e=1762992000&v=beta&t=7yFLVd6q68Vn3wfuaLyexj7iM5wR33lQwJzq0i0sXDM"
-        alt="logo"
-        width={30}
-        height={30}
-      />
+      <div className="relative w-[30px] h-[30px] flex-shrink-0">
+        <img
+          src="/MT logo.jpeg"
+          alt="logo"
+          className="w-full h-full object-contain rounded-sm"
+        />
+      </div>
       <span className="font-medium text-white">Chris</span>
     </Link>
   );

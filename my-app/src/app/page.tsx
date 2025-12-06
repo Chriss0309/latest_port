@@ -72,7 +72,34 @@ export default function Home() {
                   whileHover={{ x: 5 }}
                 >
                   <span className="text-gray-500 flex-shrink-0">›</span>
-                  <p className="flex-1">working as a <span className="font-semibold text-white">contract engineer</span> building out software for clients (e.g. <span className="underline font-semibold"><a href="http://www.faves.site/index.html">Faves</a></span>)</p>
+                  <p className="flex-1">working with <span className="underline font-semibold"><a href="https://x.com/mayankja1n">Mayank</a></span> (<span className="inline-flex items-baseline gap-1.5">
+                    <Image 
+                      src="/Hecaton Logo.svg" 
+                      alt="Hecaton" 
+                      width={16} 
+                      height={16} 
+                      className="inline-block align-text-bottom"
+                    />
+                    Hecaton
+                  </span>) to ship digital products for startups (<span className="inline-flex items-baseline gap-1.5 underline font-semibold">
+                    <Image 
+                      src="/1bitcoincaLogosmall-1024x247.webp" 
+                      alt="1Bitcoin.ca" 
+                      width={16} 
+                      height={16} 
+                      className="inline-block align-text-bottom"
+                    />
+                    <a href="https://1bitcoin.ca/">1Bitcoin.ca</a>
+                  </span>, <span className="inline-flex items-baseline gap-1.5 underline font-semibold">
+                    <Image 
+                      src="/fleetcraft logo.png" 
+                      alt="Fleetcraft" 
+                      width={16} 
+                      height={16} 
+                      className="inline-block align-text-bottom"
+                    />
+                    <a href="https://www.fleetcraft.com/">Fleetcraft</a>
+                  </span>, <span className="underline font-semibold"><a href="https://realestateaigents.ca/">reAIgents</a></span>)</p>
                 </motion.div>
                 <motion.div 
                   className="flex items-baseline gap-3"
@@ -84,7 +111,7 @@ export default function Home() {
                   <span className="text-gray-500 flex-shrink-0">›</span>
                   <p className="flex-1">working on <span className="inline-flex items-baseline gap-1.5 font-semibold text-white underline">
                     <Image 
-                      src="/MentorTrader Logo.png" 
+                      src="/MT logo.jpeg" 
                       alt="MentorTrader" 
                       width={16} 
                       height={16} 
@@ -175,7 +202,7 @@ export default function Home() {
                     <div className="flex-1">
                       <p>am working on <span className="inline-flex items-baseline gap-1.5 font-semibold text-white">
                         <Image 
-                          src="/MentorTrader Logo.png" 
+                          src="/MT logo.jpeg" 
                           alt="MentorTrader" 
                           width={16} 
                           height={16} 
@@ -206,7 +233,7 @@ export default function Home() {
                         </div>
                       </motion.div>
 
-                      <div className="mt-4 ml-4">
+                      <div className="mt-4 ml-4"> 
                         <h3 className="text-base font-heading font-semibold text-white mb-3">my progress so far..</h3>
                         <div className="space-y-2 text-gray-300">
                           <div className="flex items-baseline gap-3">
