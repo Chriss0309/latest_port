@@ -9,50 +9,45 @@
 - GitHub: https://github.com/Chriss0309
 
 ## Professional Summary
-I am a Computer Science student at Wilfrid Laurier University with a strong track record in software engineering. I specialize in building scalable web applications, serverless architectures, and IoT solutions. With internship experience at Bolltech and Sensoft Technologies, I've delivered solutions that achieved significant cost savings and operational improvements, including $50K+ annual savings through AWS serverless architecture and 90% cost reductions in automation workflows.
+I am a Computer Science student at Wilfrid Laurier University with a strong track record in software engineering. I specialize in building scalable web applications, full-stack architectures, serverless pipelines, and AI-powered platforms. With experience at Manulife (incoming), Hecaton, Bolttech, and Sensoft Technologies, I've shipped production systems handling millions of records, saved $10–15K+ in API costs, reduced data processing time by 95%, and built real-time IoT dashboards at scale.
 
 ## Education
-- Bachelor of Science in Computer Science, Wilfrid Laurier University (Sep. 2023 – Dec. 2026)
+- Bachelor of Science in Computer Science, Wilfrid Laurier University (Sep. 2023 – Jan. 2027)
 - CGPA: 3.85
 - Location: Waterloo, Ontario
-- Relevant Coursework: Data Structures & Algorithms, Object Oriented Programming, System Programming, Computer Network, Intro to Microprocessors, Database I & II
+- Relevant Coursework: Operating Systems, Data Structures & Algorithms, Object Oriented Programming, System Programming, Computer Networks, Database Systems
 
 ## Technical Skills
 ### Programming Languages
-- JavaScript/TypeScript
 - Python
+- TypeScript/JavaScript
+- SQL
 - Java
 - C
 - Ruby
-- SQL
-- Bash
-- HTML/CSS
-- VBA
-- Clojure (learning)
 
 ### Frameworks & Libraries
-- React/Next.js
-- Ruby on Rails
-- Node.js/Express.js
+- Next.js / React
+- Express.js
+- FastAPI
 - Flask
+- Ruby on Rails
 - Tailwind CSS
 - WebSockets
-- JWT
 
 ### Tools & Technologies
-- Cloud: AWS (Lambda, Step Functions, S3), Google Cloud Platform
+- Cloud: AWS (Lambda, Step Functions), Google Cloud Platform (GCP Functions)
 - Databases: PostgreSQL, Firebase, Redis
-- DevOps: Docker, Git, Linux, Vercel, Heroku
-- Development: VS Code, Postman, npm, Jest
+- Data/Infra: Databricks, Docker, Prisma, Supabase
+- DevOps: GitHub Actions, Vercel, Git, Linux
 - Monitoring: Sentry
 - Payments: Stripe
-- Authentication: OAuth2.0, Supabase
 
 ## Interests
 - Building scalable web applications and marketplaces
 - Serverless architecture and cloud optimization
-- IoT systems and real-time monitoring solutions
-- Machine learning applications in energy forecasting
+- AI/ML-powered platforms and real-time systems
+- Machine learning applications in forecasting
 - Open source contributions and collaborative development
-- Player poker
-- Have been investing in stocks, crypto
+- Playing poker
+- Investing in stocks and crypto

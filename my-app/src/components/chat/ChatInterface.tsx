@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, Loader2, Bot, User } from "lucide-react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Send } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import Image from "next/image";
 import { TypingAnimation } from "@/components/ui/typing-animation";
 
 interface Message {
@@ -15,40 +14,91 @@ interface Message {
   timestamp: Date;
 }
 
+function GlassDots() {
+  return (
+    <div className="flex items-center gap-1.5 py-1">
+      <div className="glass-dot" />
+      <div className="glass-dot" />
+      <div className="glass-dot" />
+    </div>
+  );
+}
+
+const markdownComponents: React.ComponentProps<typeof ReactMarkdown>["components"] = {
+  h1: ({ ...props }) => <h1 className="text-white font-bold text-xl mb-2" {...props} />,
+  h2: ({ ...props }) => <h2 className="text-white font-bold text-lg mb-2" {...props} />,
+  h3: ({ ...props }) => <h3 className="text-white font-semibold text-base mb-1" {...props} />,
+  h4: ({ ...props }) => <h4 className="text-white font-semibold text-sm mb-1" {...props} />,
+  p: ({ ...props }) => <p className="text-white/80 mb-2 last:mb-0" {...props} />,
+  strong: ({ ...props }) => <strong className="text-white font-semibold" {...props} />,
+  code: (props) => {
+    const { className, children, ...rest } = props as {
+      className?: string;
+      children?: React.ReactNode;
+    };
+    const isInline = !className;
+    return isInline ? (
+      <code
+        className="bg-white/[0.08] px-1.5 py-0.5 rounded text-blue-300/90 text-xs"
+        {...rest}
+      >
+        {children}
+      </code>
+    ) : (
+      <code
+        className="block bg-black/30 rounded-lg p-3 my-2 text-white/70 text-xs overflow-x-auto"
+        {...rest}
+      >
+        {children}
+      </code>
+    );
+  },
+  a: ({ ...props }) => (
+    <a className="text-blue-400/90 hover:text-blue-300 underline underline-offset-2 transition-colors" {...props} />
+  ),
+  ul: ({ ...props }) => <ul className="list-disc list-inside my-2 text-white/80 space-y-1" {...props} />,
+  ol: ({ ...props }) => <ol className="list-decimal list-inside my-2 text-white/80 space-y-1" {...props} />,
+  li: ({ ...props }) => <li className="text-white/80" {...props} />,
+  blockquote: ({ ...props }) => (
+    <blockquote
+      className="border-l-2 border-cyan-400/40 pl-4 py-1 my-2 text-white/60 italic"
+      {...props}
+    />
+  ),
+};
+
 export function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const [isFocused, setIsFocused] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Load suggested questions on mount
   useEffect(() => {
     loadSuggestions();
   }, []);
 
-  // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
-    if (scrollAreaRef.current) {
-      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [messages, isLoading]);
 
   const loadSuggestions = async () => {
     try {
       const response = await fetch("/api/chat?action=suggestions");
       const data = await response.json();
       setSuggestions(data.suggestions || []);
-    } catch (error) {
-      console.error("Failed to load suggestions:", error);
+    } catch {
+      // silently fail
     }
   };
 
-  const sendMessage = async (messageText?: string) => {
+  const sendMessage = useCallback(async (messageText?: string) => {
     const text = messageText || input.trim();
     if (!text || isLoading) return;
 
-    // Add user message
     const userMessage: Message = {
       role: "user",
       content: text,
@@ -61,9 +111,7 @@ export function ChatInterface() {
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: text,
           chatHistory: messages.map(({ role, content }) => ({ role, content })),
@@ -71,35 +119,32 @@ export function ChatInterface() {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to get response");
-      }
+      if (!response.ok) throw new Error("Failed to get response");
 
       const data = await response.json();
-
-      // Add assistant message
-      const assistantMessage: Message = {
-        role: "assistant",
-        content: data.message,
-        timestamp: new Date(data.timestamp),
-      };
-      setMessages((prev) => [...prev, assistantMessage]);
-    } catch (error) {
-      console.error("Chat error:", error);
-      
-      // Add error message
-      const errorMessage: Message = {
-        role: "assistant",
-        content: "I'm sorry, I encountered an error while processing your message. Please try again.",
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, errorMessage]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: data.message,
+          timestamp: new Date(data.timestamp),
+        },
+      ]);
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: "I encountered an error processing your message. Please try again.",
+          timestamp: new Date(),
+        },
+      ]);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [input, isLoading, messages]);
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
@@ -107,219 +152,184 @@ export function ChatInterface() {
   };
 
   return (
-    <div className="flex flex-col h-[600px] w-full max-w-2xl mx-auto rounded-2xl shadow-2xl relative overflow-hidden group">
-      {/* Glass effect background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-2xl" />
-      <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/5 via-transparent to-purple-500/5" />
-      
-      {/* Border with gradient */}
-      <div className="absolute inset-0 rounded-2xl border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]" />
-      
-      {/* Inner glow */}
-      <div className="absolute inset-[1px] rounded-2xl bg-gradient-to-br from-white/5 to-transparent opacity-50" />
-      
-      <div className="relative flex flex-col h-full">
-        {/* Header */}
-        <div className="p-4 border-b border-white/10 backdrop-blur-sm">
-          <h3 className="text-lg font-heading font-bold flex items-center gap-2 text-white">
-            <img src="/favicon.ico" alt="Chris" className="w-6 h-6" />
-            Portfolio Assistant
-          </h3>
-          <p className="text-sm text-gray-400 font-body">
-            Ask me anything about my experience, projects, or skills!
-          </p>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.98, y: 8 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      className="glass-panel relative flex flex-col h-[600px] w-full max-w-2xl mx-auto rounded-3xl overflow-hidden"
+    >
+      {/* Ambient top highlight */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px"
+        style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent)" }}
+      />
+
+      {/* Header */}
+      <div className="flex items-center gap-3 px-5 py-4 glass-divider border-b">
+        <div className="relative flex-shrink-0">
+          <Image src="/favicon.ico" alt="Chris" width={28} height={28} className="rounded-full" unoptimized />
+          <span
+            className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border border-black/40"
+            style={{ background: "rgba(37,99,235,0.9)", boxShadow: "0 0 6px rgba(37,99,235,0.6)" }}
+          />
         </div>
-
-        {/* Messages Area */}
-        <ScrollArea className="flex-1 p-4 relative" ref={scrollAreaRef}>
-        {messages.length === 0 ? (
-          <div className="space-y-4">
-            <div className="text-center text-gray-400">
-              <TypingAnimation 
-                words={[
-                  "Start a conversation by asking a question...",
-                  "What would you like to know about me?",
-                  "Ask about my experience, projects, or skills!"
-                ]}
-                typeSpeed={50}
-                deleteSpeed={30}
-                pauseDelay={2000}
-                loop={true}
-                showCursor={true}
-                blinkCursor={true}
-              />
-            </div>
-            {suggestions.length > 0 && (
-              <div className="space-y-2">
-                {suggestions.map((suggestion, index) => (
-                  <button
-                    key={index}
-                    onClick={() => sendMessage(suggestion)}
-                    className="w-full text-left p-3 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 backdrop-blur-sm transition-all text-sm text-gray-300 hover:text-white shadow-lg hover:shadow-xl hover:border-white/30"
-                  >
-                    {suggestion}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex gap-3 ${
-                  message.role === "user" ? "justify-end" : "justify-start"
-                }`}
-              >
-                {message.role === "assistant" && (
-                  <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
-                    <img src="/favicon.ico" alt="Chris" className="w-8 h-8" />
-                  </div>
-                )}
-                <div
-                  className={`max-w-[80%] rounded-2xl p-3 backdrop-blur-sm border shadow-lg bg-white/10 text-gray-100 border-white/20`}
-                >
-                  <div className="text-sm prose prose-sm max-w-none prose-invert prose-headings:text-white prose-p:text-gray-200 prose-strong:text-white prose-li:text-gray-200 prose-code:text-blue-300">
-                    {message.role === "assistant" ? (
-                      <ReactMarkdown 
-                        remarkPlugins={[remarkGfm]}
-                        components={{
-                          // Style headings
-                          h1: ({node, ...props}) => (
-                            <h1 className="text-white font-bold text-xl mb-2" {...props} />
-                          ),
-                          h2: ({node, ...props}) => (
-                            <h2 className="text-white font-bold text-lg mb-2" {...props} />
-                          ),
-                          h3: ({node, ...props}) => (
-                            <h3 className="text-white font-semibold text-base mb-1" {...props} />
-                          ),
-                          h4: ({node, ...props}) => (
-                            <h4 className="text-white font-semibold text-sm mb-1" {...props} />
-                          ),
-                          // Style paragraphs
-                          p: ({node, ...props}) => (
-                            <p className="text-gray-200 mb-2" {...props} />
-                          ),
-                          // Style strong/bold text
-                          strong: ({node, ...props}) => (
-                            <strong className="text-white font-bold" {...props} />
-                          ),
-                          // Style code blocks
-                          code: (props) => {
-                            const {className, children, ...rest} = props as { className?: string; children?: React.ReactNode };
-                            const isInline = !className;
-                            return isInline ? (
-                              <code className="bg-white/10 px-1.5 py-0.5 rounded text-blue-300 text-xs" {...rest}>
-                                {children}
-                              </code>
-                            ) : (
-                              <code className="block bg-white/5 p-2 rounded my-2 text-gray-200 text-xs overflow-x-auto" {...rest}>
-                                {children}
-                              </code>
-                            );
-                          },
-                          // Style links
-                          a: ({node, ...props}) => (
-                            <a className="text-blue-400 hover:text-blue-300 hover:underline" {...props} />
-                          ),
-                          // Style lists
-                          ul: ({node, ...props}) => (
-                            <ul className="list-disc list-inside my-2 text-gray-200 space-y-1" {...props} />
-                          ),
-                          ol: ({node, ...props}) => (
-                            <ol className="list-decimal list-inside my-2 text-gray-200 space-y-1" {...props} />
-                          ),
-                          li: ({node, ...props}) => (
-                            <li className="text-gray-200" {...props} />
-                          ),
-                          // Style blockquotes
-                          blockquote: ({node, ...props}) => (
-                            <blockquote className="border-l-4 border-blue-400 pl-4 py-2 my-2 text-gray-300 italic" {...props} />
-                          ),
-                        }}
-                      >
-                        {message.content}
-                      </ReactMarkdown>
-                    ) : (
-                      <p className="whitespace-pre-wrap text-white">{message.content}</p>
-                    )}
-                  </div>
-                  <p
-                    className={`text-xs mt-1 ${
-                      message.role === "user"
-                        ? "text-white/70"
-                        : "text-gray-400"
-                    }`}
-                  >
-                    {message.timestamp.toLocaleTimeString()}
-                  </p>
-                </div>
-                {message.role === "user" && (
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center flex-shrink-0 border border-white/20 shadow-lg">
-                    <User className="w-4 h-4 text-white" />
-                  </div>
-                )}
-              </div>
-            ))}
-            {isLoading && (
-              <div className="flex gap-3 justify-start">
-                <div className="w-8 h-8 flex items-center justify-center">
-                  <img src="/favicon.ico" alt="Chris" className="w-8 h-8" />
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-3 shadow-lg">
-                  <div className="text-gray-300 text-sm flex items-center gap-2">
-                    <TypingAnimation 
-                      words={["Thinking...", "Processing...", "Analyzing..."]}
-                      typeSpeed={60}
-                      deleteSpeed={40}
-                      pauseDelay={800}
-                      loop={true}
-                      showCursor={false}
-                      className="inline-block"
-                    />
-                    <Loader2 className="w-3 h-3 animate-spin text-gray-400 ml-1" />
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-        </ScrollArea>
-
-        {/* Input Area */}
-        <div className="p-4 border-t border-white/10 backdrop-blur-sm">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              sendMessage();
-            }}
-            className="flex gap-2"
-          >
-            <Input
-              placeholder="What would you like to know about me?"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={handleKeyPress}
-              disabled={isLoading}
-              className="flex-1 bg-white/5 border-white/20 text-white placeholder:text-gray-500 focus-visible:ring-blue-400 focus-visible:ring-1 focus-visible:border-blue-400/50 backdrop-blur-sm transition-all"
-            />
-            <Button 
-              type="submit" 
-              disabled={isLoading || !input.trim()} 
-              size="icon" 
-              className="bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg shadow-blue-500/25 border border-white/10"
-            >
-              {isLoading ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <Send className="w-4 h-4" />
-              )}
-            </Button>
-          </form>
+        <div className="min-w-0">
+          <p className="text-sm font-heading font-bold text-white/90 leading-none">Portfolio Assistant</p>
+          <p className="text-xs text-white/35 mt-0.5 font-body">Ask me anything about Chris</p>
         </div>
       </div>
-    </div>
+
+      {/* Messages */}
+      <div className="scroll-fade-container flex-1 min-h-0">
+        <div
+          ref={scrollRef}
+          className="glass-scroll h-full overflow-y-auto px-4 py-4"
+        >
+          <AnimatePresence initial={false}>
+            {messages.length === 0 ? (
+              <motion.div
+                key="empty"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="flex flex-col items-center justify-center h-full gap-5 pt-8"
+              >
+                <div className="text-center text-white/40 text-sm font-body">
+                  <TypingAnimation
+                    words={[
+                      "Ask me anything...",
+                      "What would you like to know?",
+                      "Curious about my experience?",
+                    ]}
+                    typeSpeed={50}
+                    deleteSpeed={30}
+                    pauseDelay={2200}
+                    loop={true}
+                    showCursor={true}
+                    blinkCursor={true}
+                  />
+                </div>
+
+                {suggestions.length > 0 && (
+                  <div className="w-full space-y-2">
+                    {suggestions.map((s, i) => (
+                      <motion.button
+                        key={i}
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.07 + 0.1, duration: 0.35, ease: "easeOut" }}
+                        onClick={() => sendMessage(s)}
+                        className="glass-suggestion w-full text-left px-4 py-2.5 rounded-xl text-xs text-white/55 hover:text-white/80 font-body"
+                      >
+                        {s}
+                      </motion.button>
+                    ))}
+                  </div>
+                )}
+              </motion.div>
+            ) : (
+              <div className="space-y-3">
+                {messages.map((message, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    className={`flex gap-2.5 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                  >
+                    {message.role === "assistant" && (
+                      <div className="flex-shrink-0 w-6 h-6 mt-1">
+                        <Image src="/favicon.ico" alt="Chris" width={24} height={24} className="rounded-full" unoptimized />
+                      </div>
+                    )}
+
+                    <div
+                      className={`max-w-[78%] px-4 py-3 rounded-2xl ${
+                        message.role === "user"
+                          ? "glass-bubble-user rounded-tr-sm"
+                          : "glass-bubble-assistant rounded-tl-sm"
+                      }`}
+                    >
+                      <div className="text-xs font-body prose-sm max-w-none">
+                        {message.role === "assistant" ? (
+                          <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            components={markdownComponents}
+                          >
+                            {message.content}
+                          </ReactMarkdown>
+                        ) : (
+                          <p className="text-white/85 whitespace-pre-wrap">{message.content}</p>
+                        )}
+                      </div>
+                      <p className="text-[10px] mt-1.5 text-white/25 font-body">
+                        {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                      </p>
+                    </div>
+
+                    {message.role === "user" && (
+                      <div className="flex-shrink-0 w-6 h-6 mt-1 rounded-full bg-white/[0.07] border border-white/10 flex items-center justify-center">
+                        <span className="text-[9px] text-white/50 font-heading font-bold">YOU</span>
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+
+                {isLoading && (
+                  <motion.div
+                    key="loading"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.25 }}
+                    className="flex gap-2.5 justify-start"
+                  >
+                    <div className="flex-shrink-0 w-6 h-6 mt-1">
+                      <Image src="/favicon.ico" alt="Chris" width={24} height={24} className="rounded-full" unoptimized />
+                    </div>
+                    <div className="glass-bubble-assistant px-4 py-3 rounded-2xl rounded-tl-sm">
+                      <GlassDots />
+                    </div>
+                  </motion.div>
+                )}
+              </div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* Input area */}
+      <div className="px-4 py-3 glass-divider border-t">
+        <motion.form
+          animate={isFocused ? { scale: 1.005 } : { scale: 1 }}
+          transition={{ duration: 0.2 }}
+          onSubmit={(e) => {
+            e.preventDefault();
+            sendMessage();
+          }}
+          className="flex gap-2 items-center"
+        >
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            disabled={isLoading}
+            placeholder="Ask something..."
+            className="glass-input flex-1 rounded-xl px-4 py-2.5 text-xs text-white/80 placeholder:text-white/25 font-body disabled:opacity-40 disabled:cursor-not-allowed"
+          />
+          <button
+            type="submit"
+            disabled={isLoading || !input.trim()}
+            className="glass-send-btn w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+          >
+            <Send className="w-3.5 h-3.5 text-blue-300/80" />
+          </button>
+        </motion.form>
+      </div>
+    </motion.div>
   );
 }

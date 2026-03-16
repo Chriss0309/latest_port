@@ -150,6 +150,22 @@ export default function Home() {
                   whileHover={{ x: 5 }}
                 >
                   <span className="text-gray-500 flex-shrink-0">›</span>
+                  <p className="flex-1">
+                    will be working as a SWE intern at{" "}
+                    <span className="inline-flex items-center gap-1.5 underline font-semibold text-white">
+                      <a href="https://www.manulife.ca/">Manulife</a>
+                    </span>
+                    {' this summer.(May to Sep. 2026)'}
+                  </p>
+                </motion.div>
+                <motion.div 
+                  className="flex items-baseline gap-3"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.1, duration: 0.4 }}
+                  whileHover={{ x: 5 }}
+                >
+                  <span className="text-gray-500 flex-shrink-0">›</span>
                   <p className="flex-1">was working as a <span className="font-semibold text-white">SWE intern</span> at <span className="inline-flex items-center gap-1.5 underline font-semibold text-white">
                     <Image 
                       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTaqx9Nk6GoCK9IISw9asCEs2YC8MitdLjAg&s" 
@@ -161,7 +177,8 @@ export default function Home() {
                     <a href="https://bolttech.io/">
                     Bolttech
                     </a>
-                  </span>, shipping a serverless architecture for inventory management handling <span className="font-semibold text-white">10,000+ daily transactions</span></p>
+                  </span>. Generated $15000+ in annual savings by re-architecting legacy automation into a serverless AWS ETL
+                  pipeline (Lambda/Step Functions) scaling to process 1M+ daily inventory records.</p>
                 </motion.div>
                 <motion.div 
                   className="flex items-baseline gap-3"
@@ -210,29 +227,7 @@ export default function Home() {
                         />
                         <a href="https://www.mentor-trader.com/">MentorTrader</a>
                       </span> -- a marketplace platform for <span className="font-semibold text-white">retail traders</span> to find <span className="font-semibold text-white">credible verified mentors</span></p>
-                                
-                      {/* Video Showcase */}
-                      <motion.div 
-                        className="mt-8"
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 1.5, duration: 0.5 }}
-                        whileHover={{ scale: 1.02 }}
-                      >
-                        <div className="relative overflow-hidden rounded-2xl border border-white/20 bg-white/5 backdrop-blur-sm shadow-xl max-w-xs transition-all duration-300 hover:border-white/30 hover:shadow-2xl">
-                          <video 
-                            className="w-full h-auto rounded-2xl"
-                            autoPlay 
-                            loop 
-                            muted 
-                            playsInline
-                          >
-                            <source src="/showcase(edited).mp4" type="video/mp4" />
-                            Your browser does not support the video tag.
-                          </video>
-                        </div>
-                      </motion.div>
-
+                              
                       <div className="mt-4 ml-4"> 
                         <h3 className="text-base font-heading font-semibold text-white mb-3">my progress so far..</h3>
                         <div className="space-y-2 text-gray-300">
@@ -299,7 +294,7 @@ export default function Home() {
                   whileHover={{ x: 5 }}
                 >
                   <span className="text-gray-500 flex-shrink-0">›</span>
-                  <p className="flex-1"><span className="underline font-semibold"><a href="https://faves.site/index.html">Faves</a></span> – a platform for curating recommendations from influential figures</p>
+                  <p className="flex-1"><span className="underline font-semibold"><a href="https://www.blockmark.ca/">Blockmark</a></span> - Permanently record and verify messages and files on the Bitcoin blockchain. </p>
                 </motion.div>
                 <motion.div 
                   className="flex items-baseline gap-3"
@@ -309,7 +304,7 @@ export default function Home() {
                   whileHover={{ x: 5 }}
                 >
                   <span className="text-gray-500 flex-shrink-0">›</span>
-                  <p className="flex-1"><span className="underline font-semibold"><a href="https://github.com/Chriss0309/URL_Shortener">URL Shortener</a></span> – a full-stack URL management system</p>
+                  <p className="flex-1"><span className="underline font-semibold"><a href="https://www.fleetcraft.com/">Fleetcraft</a></span> – AI built for aircraft maintenance.</p>
                 </motion.div>
                 <motion.div 
                   className="flex items-baseline gap-3"
@@ -319,99 +314,12 @@ export default function Home() {
                   whileHover={{ x: 5 }}
                 >
                   <span className="text-gray-500 flex-shrink-0">›</span>
-                  <p className="flex-1"><span className="underline font-semibold"><a href="https://github.com/VickySekhon/koinbase">Koinbase</a></span> – a mock trading platform built with React and FastAPI</p>
+                  <p className="flex-1"><span className="underline font-semibold"><a href="https://realestateaigents.ca/">reAIgents</a></span> – Make Better Real Estate Decisions (Ontario).</p>
                 </motion.div>
               </div>
             </motion.div>
 
-            <motion.div 
-              className="mt-12"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 2.0, duration: 0.5 }}
-            >
-              <p className="text-xl font-heading font-bold text-white text-left mb-6">
-                Goated videos...
-              </p>
-              
-              <div className="space-y-4">
-                {/* Video 1 */}
-                <motion.div 
-                  className="relative overflow-hidden rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm shadow-lg"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 2.1, duration: 0.5 }}
-                  whileHover={{ scale: 1.02, borderColor: "rgba(255, 255, 255, 0.3)" }}
-                >
-                  <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-                    <iframe
-                      className="absolute top-0 left-0 w-full h-full rounded-xl"
-                      src="https://www.youtube.com/embed/KmDYXaaT9sA"
-                      title="YouTube video 1"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  </div>
-                </motion.div>
-
-                {/* Video 2 */}
-                <motion.div 
-                  className="relative overflow-hidden rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm shadow-lg"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 2.2, duration: 0.5 }}
-                  whileHover={{ scale: 1.02, borderColor: "rgba(255, 255, 255, 0.3)" }}
-                >
-                  <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-                    <iframe
-                      className="absolute top-0 left-0 w-full h-full rounded-xl"
-                      src="https://www.youtube.com/embed/uxoCnxlxpIk"
-                      title="YouTube video 2"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  </div>
-                </motion.div>
-
-                {/* Video 3 */}
-                <motion.div 
-                  className="relative overflow-hidden rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm shadow-lg"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 2.3, duration: 0.5 }}
-                  whileHover={{ scale: 1.02, borderColor: "rgba(255, 255, 255, 0.3)" }}
-                >
-                  <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-                    <iframe
-                      className="absolute top-0 left-0 w-full h-full rounded-xl"
-                      src="https://www.youtube.com/embed/JjHFubUPLV0"
-                      title="YouTube video 3"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  </div>
-                </motion.div>
-
-                {/* Video 4 */}
-                <motion.div 
-                  className="relative overflow-hidden rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm shadow-lg"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 2.4, duration: 0.5 }}
-                  whileHover={{ scale: 1.02, borderColor: "rgba(255, 255, 255, 0.3)" }}
-                >
-                  <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-                    <iframe
-                      className="absolute top-0 left-0 w-full h-full rounded-xl"
-                      src="https://www.youtube.com/embed/mScpHTIi-kM"
-                      title="YouTube video 4"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  </div>
-                </motion.div>
-          </div>
-            </motion.div>
+   
           </motion.div>
 
           {/* Right Side - Chat Interface */}

@@ -68,14 +68,6 @@ export function NavbarDemo() {
           </div>
           <div className="flex items-center gap-4">
             <NavbarButton 
-              variant="secondary" 
-              href="/Christopher_OOI_Resume (1).pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Resume
-            </NavbarButton>
-            <NavbarButton 
               variant="primary"
               href="mailto:ooichristopher8@gmail.com"
             >
@@ -118,16 +110,6 @@ export function NavbarDemo() {
             </div>
             
             <div className="flex w-full flex-col gap-4">
-              <NavbarButton
-                onClick={() => setIsMobileMenuOpen(false)}
-                variant="secondary"
-                className="w-full"
-                href="/Christopher_OOI_Resume (1).pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Resume
-              </NavbarButton>
               <NavbarButton
                 onClick={() => setIsMobileMenuOpen(false)}
                 variant="primary"
