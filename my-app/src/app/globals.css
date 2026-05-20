@@ -190,9 +190,11 @@
   pointer-events: none;
 }
 
-.grainy-background > * {
-  position: relative;
-  z-index: 1;
+@layer base {
+  .grainy-background > * {
+    position: relative;
+    z-index: 1;
+  }
 }
 
 .glow {
