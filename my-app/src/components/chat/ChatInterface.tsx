@@ -2,11 +2,9 @@
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Send } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import Image from "next/image";
-import { TypingAnimation } from "@/components/ui/typing-animation";
 
 interface Message {
   role: "user" | "assistant";
@@ -14,23 +12,26 @@ interface Message {
   timestamp: Date;
 }
 
-function GlassDots() {
+const dotClass =
+  "w-1.5 h-1.5 rounded-full bg-neutral-400 animate-[chat-pulse_1.4s_ease-in-out_infinite]";
+
+function LoaderDots() {
   return (
     <div className="flex items-center gap-1.5 py-1">
-      <div className="glass-dot" />
-      <div className="glass-dot" />
-      <div className="glass-dot" />
+      <div className={dotClass} />
+      <div className={`${dotClass} [animation-delay:0.2s]`} />
+      <div className={`${dotClass} [animation-delay:0.4s]`} />
     </div>
   );
 }
 
 const markdownComponents: React.ComponentProps<typeof ReactMarkdown>["components"] = {
-  h1: ({ ...props }) => <h1 className="text-white font-bold text-xl mb-2" {...props} />,
-  h2: ({ ...props }) => <h2 className="text-white font-bold text-lg mb-2" {...props} />,
-  h3: ({ ...props }) => <h3 className="text-white font-semibold text-base mb-1" {...props} />,
-  h4: ({ ...props }) => <h4 className="text-white font-semibold text-sm mb-1" {...props} />,
-  p: ({ ...props }) => <p className="text-white/80 mb-2 last:mb-0" {...props} />,
-  strong: ({ ...props }) => <strong className="text-white font-semibold" {...props} />,
+  h1: ({ ...props }) => <h1 className="text-foreground font-sans font-medium text-lg mb-2" {...props} />,
+  h2: ({ ...props }) => <h2 className="text-foreground font-sans font-medium text-base mb-2" {...props} />,
+  h3: ({ ...props }) => <h3 className="text-foreground font-sans font-medium text-sm mb-1" {...props} />,
+  h4: ({ ...props }) => <h4 className="text-foreground font-sans font-medium text-sm mb-1" {...props} />,
+  p: ({ ...props }) => <p className="text-foreground/80 mb-2 last:mb-0" {...props} />,
+  strong: ({ ...props }) => <strong className="text-foreground font-medium" {...props} />,
   code: (props) => {
     const { className, children, ...rest } = props as {
       className?: string;
@@ -39,14 +40,14 @@ const markdownComponents: React.ComponentProps<typeof ReactMarkdown>["components
     const isInline = !className;
     return isInline ? (
       <code
-        className="bg-white/[0.08] px-1.5 py-0.5 rounded text-blue-300/90 text-xs"
+        className="bg-white border border-border rounded px-1.5 py-0.5 text-[12px] font-mono text-foreground"
         {...rest}
       >
         {children}
       </code>
     ) : (
       <code
-        className="block bg-black/30 rounded-lg p-3 my-2 text-white/70 text-xs overflow-x-auto"
+        className="block bg-white border border-border rounded-lg p-3 my-2 font-mono text-[12px] text-foreground/80 overflow-x-auto"
         {...rest}
       >
         {children}
@@ -54,14 +55,14 @@ const markdownComponents: React.ComponentProps<typeof ReactMarkdown>["components
     );
   },
   a: ({ ...props }) => (
-    <a className="text-blue-400/90 hover:text-blue-300 underline underline-offset-2 transition-colors" {...props} />
+    <a className="text-blue-700 underline underline-offset-2" {...props} />
   ),
-  ul: ({ ...props }) => <ul className="list-disc list-inside my-2 text-white/80 space-y-1" {...props} />,
-  ol: ({ ...props }) => <ol className="list-decimal list-inside my-2 text-white/80 space-y-1" {...props} />,
-  li: ({ ...props }) => <li className="text-white/80" {...props} />,
+  ul: ({ ...props }) => <ul className="list-disc list-inside my-2 text-foreground/80 space-y-1" {...props} />,
+  ol: ({ ...props }) => <ol className="list-decimal list-inside my-2 text-foreground/80 space-y-1" {...props} />,
+  li: ({ ...props }) => <li className="text-foreground/80" {...props} />,
   blockquote: ({ ...props }) => (
     <blockquote
-      className="border-l-2 border-cyan-400/40 pl-4 py-1 my-2 text-white/60 italic"
+      className="border-l-2 border-neutral-300 pl-4 py-1 my-2 text-foreground/60 italic"
       {...props}
     />
   ),
@@ -72,7 +73,6 @@ export function ChatInterface() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [isFocused, setIsFocused] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -153,183 +153,112 @@ export function ChatInterface() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.98, y: 8 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="glass-panel relative flex flex-col h-[600px] w-full max-w-2xl mx-auto rounded-3xl overflow-hidden"
+      className="flex h-[70vh] w-full flex-col overflow-hidden rounded-xl border border-border bg-card lg:h-full"
     >
-      {/* Ambient top highlight */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px"
-        style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent)" }}
-      />
-
-      {/* Header */}
-      <div className="flex items-center gap-3 px-5 py-4 glass-divider border-b">
-        <div className="relative flex-shrink-0">
-          <Image src="/favicon.ico" alt="Chris" width={28} height={28} className="rounded-full" unoptimized />
-          <span
-            className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border border-black/40"
-            style={{ background: "rgba(37,99,235,0.9)", boxShadow: "0 0 6px rgba(37,99,235,0.6)" }}
-          />
-        </div>
-        <div className="min-w-0">
-          <p className="text-sm font-heading font-bold text-white/90 leading-none">Portfolio Assistant</p>
-          <p className="text-xs text-white/35 mt-0.5 font-body">Ask me anything about Chris</p>
-        </div>
+      <div className="border-b border-border px-4 py-3 text-sm font-medium text-foreground">
+        Ask me anything
       </div>
 
-      {/* Messages */}
-      <div className="scroll-fade-container flex-1 min-h-0">
-        <div
-          ref={scrollRef}
-          className="glass-scroll h-full overflow-y-auto px-4 py-4"
-        >
-          <AnimatePresence initial={false}>
-            {messages.length === 0 ? (
-              <motion.div
-                key="empty"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex flex-col items-center justify-center h-full gap-5 pt-8"
-              >
-                <div className="text-center text-white/40 text-sm font-body">
-                  <TypingAnimation
-                    words={[
-                      "Ask me anything...",
-                      "What would you like to know?",
-                      "Curious about my experience?",
-                    ]}
-                    typeSpeed={50}
-                    deleteSpeed={30}
-                    pauseDelay={2200}
-                    loop={true}
-                    showCursor={true}
-                    blinkCursor={true}
-                  />
-                </div>
-
-                {suggestions.length > 0 && (
-                  <div className="w-full space-y-2">
-                    {suggestions.map((s, i) => (
-                      <motion.button
-                        key={i}
-                        initial={{ opacity: 0, y: 6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: i * 0.07 + 0.1, duration: 0.35, ease: "easeOut" }}
-                        onClick={() => sendMessage(s)}
-                        className="glass-suggestion w-full text-left px-4 py-2.5 rounded-xl text-xs text-white/55 hover:text-white/80 font-body"
-                      >
-                        {s}
-                      </motion.button>
-                    ))}
-                  </div>
-                )}
-              </motion.div>
-            ) : (
-              <div className="space-y-3">
-                {messages.map((message, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                    className={`flex gap-2.5 ${message.role === "user" ? "justify-end" : "justify-start"}`}
-                  >
-                    {message.role === "assistant" && (
-                      <div className="flex-shrink-0 w-6 h-6 mt-1">
-                        <Image src="/favicon.ico" alt="Chris" width={24} height={24} className="rounded-full" unoptimized />
-                      </div>
-                    )}
-
-                    <div
-                      className={`max-w-[78%] px-4 py-3 rounded-2xl ${
-                        message.role === "user"
-                          ? "glass-bubble-user rounded-tr-sm"
-                          : "glass-bubble-assistant rounded-tl-sm"
-                      }`}
+      <div ref={scrollRef} className="chat-scroll min-h-0 flex-1 overflow-y-auto px-3 py-3">
+        <AnimatePresence initial={false}>
+          {messages.length === 0 ? (
+            <motion.div
+              key="empty"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex h-full flex-col justify-end"
+            >
+              {suggestions.length > 0 && (
+                <>
+                  <p className="px-2.5 pb-1.5 text-xs text-muted-foreground">Try asking</p>
+                  {suggestions.map((s, i) => (
+                    <motion.button
+                      key={i}
+                      initial={{ opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.05, duration: 0.3, ease: "easeOut" }}
+                      onClick={() => sendMessage(s)}
+                      className="w-full rounded-md px-2.5 py-2 text-left text-sm text-foreground/75 transition-colors hover:bg-neutral-100 hover:text-foreground"
                     >
-                      <div className="text-xs font-body prose-sm max-w-none">
-                        {message.role === "assistant" ? (
-                          <ReactMarkdown
-                            remarkPlugins={[remarkGfm]}
-                            components={markdownComponents}
-                          >
-                            {message.content}
-                          </ReactMarkdown>
-                        ) : (
-                          <p className="text-white/85 whitespace-pre-wrap">{message.content}</p>
-                        )}
-                      </div>
-                      <p className="text-[10px] mt-1.5 text-white/25 font-body">
-                        {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                      </p>
-                    </div>
+                      {s}
+                    </motion.button>
+                  ))}
+                </>
+              )}
+            </motion.div>
+          ) : (
+            <div className="flex flex-col gap-4 px-1">
+              {messages.map((message, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  className={
+                    message.role === "user"
+                      ? "max-w-[85%] self-end whitespace-pre-wrap rounded-2xl bg-neutral-100 px-3.5 py-2 text-sm text-foreground"
+                      : "text-sm leading-relaxed text-foreground/85"
+                  }
+                >
+                  {message.role === "assistant" ? (
+                    <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+                      {message.content}
+                    </ReactMarkdown>
+                  ) : (
+                    message.content
+                  )}
+                </motion.div>
+              ))}
 
-                    {message.role === "user" && (
-                      <div className="flex-shrink-0 w-6 h-6 mt-1 rounded-full bg-white/[0.07] border border-white/10 flex items-center justify-center">
-                        <span className="text-[9px] text-white/50 font-heading font-bold">YOU</span>
-                      </div>
-                    )}
-                  </motion.div>
-                ))}
-
-                {isLoading && (
-                  <motion.div
-                    key="loading"
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -4 }}
-                    transition={{ duration: 0.25 }}
-                    className="flex gap-2.5 justify-start"
-                  >
-                    <div className="flex-shrink-0 w-6 h-6 mt-1">
-                      <Image src="/favicon.ico" alt="Chris" width={24} height={24} className="rounded-full" unoptimized />
-                    </div>
-                    <div className="glass-bubble-assistant px-4 py-3 rounded-2xl rounded-tl-sm">
-                      <GlassDots />
-                    </div>
-                  </motion.div>
-                )}
-              </div>
-            )}
-          </AnimatePresence>
-        </div>
+              {isLoading && (
+                <motion.div
+                  key="loading"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  <LoaderDots />
+                </motion.div>
+              )}
+            </div>
+          )}
+        </AnimatePresence>
       </div>
 
-      {/* Input area */}
-      <div className="px-4 py-3 glass-divider border-t">
-        <motion.form
-          animate={isFocused ? { scale: 1.005 } : { scale: 1 }}
-          transition={{ duration: 0.2 }}
-          onSubmit={(e) => {
-            e.preventDefault();
-            sendMessage();
-          }}
-          className="flex gap-2 items-center"
-        >
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          sendMessage();
+        }}
+        className="px-3 pb-3 pt-1"
+      >
+        <div className="rounded-xl border border-border bg-white shadow-[0_1px_2px_rgba(28,22,18,0.04),0_4px_12px_rgba(28,22,18,0.05)] transition-colors focus-within:border-neutral-400">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
             disabled={isLoading}
             placeholder="Ask something..."
-            className="glass-input flex-1 rounded-xl px-4 py-2.5 text-xs text-white/80 placeholder:text-white/25 font-body disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full bg-transparent px-3.5 pb-1 pt-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none disabled:cursor-not-allowed disabled:opacity-40"
           />
-          <button
-            type="submit"
-            disabled={isLoading || !input.trim()}
-            className="glass-send-btn w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-          >
-            <Send className="w-3.5 h-3.5 text-blue-300/80" />
-          </button>
-        </motion.form>
-      </div>
+          <div className="flex justify-end px-2 pb-2">
+            <button
+              type="submit"
+              aria-label="Send"
+              disabled={isLoading || !input.trim()}
+              className="flex size-7 items-center justify-center rounded-full bg-primary text-primary-foreground transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-25"
+            >
+              <ArrowUp className="size-4" />
+            </button>
+          </div>
+        </div>
+      </form>
     </motion.div>
   );
 }
