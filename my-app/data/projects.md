@@ -1,32 +1,58 @@
 # Projects
 
 ## MentorTrader
-**Technologies:** Next.js, PostgreSQL, Stripe, AWS, Sentry
-**Type:** Full-Stack Marketplace Platform
+**Technologies:** Next.js, TypeScript, PostgreSQL, Stripe, Supabase, Docker, AWS, Sentry
+**Type:** Full-Stack Two-Sided Marketplace Platform
 
 ### Description
-A comprehensive marketplace platform focused on connecting **day traders** with **credible online trading mentors**. Built to solve the problem of finding trustworthy trading education and mentorship in the financial markets space.
+A two-sided marketplace connecting **retail investors** with **vetted trading mentors**. Built to solve the problem of finding trustworthy trading education and mentorship in the financial markets space.
 
 ### Key Features
-- **Marketplace Platform:** Created a platform connecting traders with verified mentors
+- **Marketplace Platform:** Created a platform connecting retail investors with vetted mentors
+- **AI Mentor-Matching Wizard:** Matches investors to mentors using **OpenAI embeddings**, **PostgreSQL vector search**, and **Claude reranking**, with **budget-aware recommendations** and direct handoff into mentor messaging
 - **Student Management Dashboards:** Featuring comprehensive dashboards for tracking progress and interactions
 - **Fintech Partnerships:** Established partnerships with companies like **Darwinex** and **Whop**
 - **Payment Integration:** Secure payment processing through Stripe
 - **Monitoring:** Real-time error tracking and performance monitoring with Sentry
 
 ### Technical Highlights
-- Implemented using **Next.js** with **Supabase** backend for secure authentication and database
+- Implemented using **Next.js** and **TypeScript** with **Supabase** backend for secure authentication and database
+- **OpenAI embeddings + PostgreSQL vector search** for semantic mentor matching, with **Claude** as a reranking layer
 - **Redis caching** for improved performance
 - **PostgreSQL database** for reliable data storage
+- **Docker** for containerized development and deployment
 - **AWS** for media and document storage
 - **Stripe payment integration** for secure transactions
 - **Sentry monitoring** for production reliability
 
 ### Impact
 - Onboarded **120+ active mentors**
-- Achieved **2,000+ monthly visitors**
+- Reached **20,000+ monthly visitors**
 - Created sustainable revenue model through platform fees
 - Built strong fintech partnerships with **Darwinex** and **Whop**
+
+---
+
+## Digital Wealth Management
+**Technologies:** Next.js, TypeScript, tRPC, Prisma, PostgreSQL
+**Type:** Regulated Bitcoin Custody & Lending Platform
+
+### Description
+An **Ontario Securities Commission (OSC) approved** Bitcoin custody and **BTC-backed lending** platform. Provides a regulated path for clients to hold Bitcoin and borrow against it.
+
+### Key Features
+- **Secure Onboarding:** Identity verification and account setup flows built for a regulated environment
+- **Deposits & Withdrawals:** Bitcoin custody with deposit and withdrawal workflows
+- **BTC-Backed Lending:** Loans collateralized by clients' Bitcoin holdings
+- **Compliance Workflows:** Built-in processes to meet OSC regulatory requirements
+
+### Technical Highlights
+- **Next.js** and **TypeScript** frontend with end-to-end type safety via **tRPC**
+- **Prisma** ORM over **PostgreSQL** for custody, lending, and compliance data
+
+### Impact
+- Achieved **OSC approval** for a Bitcoin custody and lending product
+- Delivered the full onboarding → custody → lending → compliance lifecycle
 
 ---
 
@@ -61,11 +87,11 @@ A platform that **curates AI-verified recommendations from influential figures**
 
 ## Technical Showcase
 These projects demonstrate proficiency in:
-- **Full-Stack Development:** Next.js, Node.js, Express.js
+- **Full-Stack Development:** Next.js, TypeScript, tRPC, Prisma, Node.js, Express.js
 - **Cloud Services:** AWS, Google Cloud, Firebase
-- **Databases:** PostgreSQL, Redis, Firebase
-- **AI/LLM Integration:** OpenAI API for automated pipelines
+- **Databases:** PostgreSQL (including vector search), Redis, Firebase
+- **AI/LLM Integration:** OpenAI embeddings, Claude reranking, OpenAI API for automated pipelines
+- **Fintech & Compliance:** OSC-approved Bitcoin custody and lending, Stripe payments
 - **Security:** reCAPTCHA, rate-limiting, Supabase Auth
-- **Payments:** Stripe integration
-- **DevOps:** Serverless deployment on Vercel and Google Cloud
+- **DevOps:** Docker, serverless deployment on Vercel and Google Cloud
 - **Monitoring:** Sentry for production systems
