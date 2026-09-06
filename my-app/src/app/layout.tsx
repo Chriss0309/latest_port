@@ -1,28 +1,29 @@
 import type { Metadata } from "next";
-import { Inter, Montserrat, JetBrains_Mono } from "next/font/google";
+import { Newsreader, Geist, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  weight: "variable",
+  axes: ["opsz"],
 });
 
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Chris Portfolio",
-  description: "Welcome to my portfolio! Ask my AI assistant about my experience, projects, and skills.",
+  title: "Chris Ooi",
+  description:
+    "Software engineer in Waterloo. Ask my AI assistant about my experience, projects, and skills.",
 };
 
 export default function RootLayout({
@@ -31,10 +32,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-black">
+    <html
+      lang="en"
+      className={`${newsreader.variable} ${geist.variable} ${jetbrainsMono.variable}`}
+    >
       <body
-        className={`${inter.variable} ${montserrat.variable} ${jetbrainsMono.variable} antialiased bg-black text-white grainy-background text-xs font-normal`}
-        style={{ lineHeight: 'normal', letterSpacing: 'normal' }}
+        className="antialiased bg-background text-foreground grainy-background"
       >
         {children}
       </body>
